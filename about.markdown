@@ -3,7 +3,13 @@ layout: page
 title:  About Me 
 permalink: /about/
 ---
-Hi, My name is Abhishek Vaid 
+Hi, My name is Abhishek Vaid
+
+I live by these **4** core tenets of Success:
+  - **Focus** - To apply very high levels of concentration to work at hand and free yourself from all distractions.
+  - **Discipline**  - To regularly engage in a well defined, well thought out routine. 
+  - **Patience** - To not expect rewards and outcomes to emerge before their due time. 
+  - **Tenacity** - To engage in an Activity/Goal with extended levels of committment and passion. 
 
 I am a former entrepreneur who is extremely passionate about Technology, Software and Startups. I'm currently working as **Principal Engineer** at [prophecy.io](http://prophecy.io). 
 
