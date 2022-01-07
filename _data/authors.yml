@@ -1,0 +1,20 @@
+Abhishek Vaid:
+  name: "Abhishek Vaid"
+  bio: "Computer Science Enthusiast. Programmer. Eternally Curious Person. Motion Picture Admirer. Amateur Gamer. Ex Co-Founder of a tech Startup. Rational. Humanist."
+  avatar: /files/vaid.jpg
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:vaid.abhi@gmail.com"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://vaidabhishek.com"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/vaidabhishek"
+    - label: "Github"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://github.com/abhishekvaid"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://www.linkedin.com/in/vaidabhishek86/"
