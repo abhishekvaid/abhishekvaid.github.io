@@ -24,12 +24,24 @@ github_username: abhishekvaid
 
 # Build settings
 markdown: kramdown
-theme: minima
+# theme: minima
+theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
+
+defaults:
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+
+include: ["_pages"]
 # exclude:
 #   - Gemfile
 #   - Gemfile.lock

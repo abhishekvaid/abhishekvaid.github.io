@@ -1,7 +1,7 @@
 ---
-layout: post
+layout: posts
 title:  "Welcome to Jekyll!"
-date:   2023-01-08 00:10:35 +0530
+date:   2022-01-08 00:10:35 +0530
 categories: jekyll update
 published: false
 ---

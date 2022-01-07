@@ -1,7 +1,7 @@
 ---
-layout: page
+layout: splash
 title: Resume
-permalink: /resume/
+permalink: /cv/
 ---
 
 Here's my updated Resume (Updated: December 2021)

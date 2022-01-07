@@ -1,7 +1,7 @@
 ---
-layout: page
+layout: splash
 title: About
-permalink: /about/
+permalink: /about
 ---
 
 A former entrepreneur who is extremely passionate about Technology, Software and Business. I'm
