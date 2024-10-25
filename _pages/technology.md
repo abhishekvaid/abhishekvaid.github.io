@@ -6,7 +6,20 @@ permalink: /technology/
 
 <h1>Posts Related To Tech</h1>
 
-<h2>2024</h2>
+{% assign posts = site.posts | where: "categories", "technology" %}
+{% assign grouped_posts = posts | group_by: "year" %}
+
+{% for year in grouped_posts %}
+<h2>{{ year.name }}</h2>
 <ul>
-    <li><a href="/technology/2024/06/10/frrole.ai-tech-stack-intro.html">Quick Intro to Frrole.ai Tech stack</a></li>
+    {% assign month_posts = year.items | group_by: "month" %}
+    {% for month in month_posts %}
+    <h3>{{ month.name }}</h3>
+    <ul>
+        {% for post in month.items %}
+        <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
 </ul>
+{% endfor %}
