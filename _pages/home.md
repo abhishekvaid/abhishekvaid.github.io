@@ -5,20 +5,22 @@
 layout: single
 permalink: /
 author: vaidabhishek
-name: Homepage
+# name: Homepage
 footer: footer
-tags: [about]
-share: false
-image:
-  credit: Accretion disk around maximally spinning black hole, by my group
+# tags: [about]
+# share: false
+# image:
+#   credit: Accretion disk around maximally spinning black hole, by my group
 ---
 
-My name is Abhishek Vaid, and I am a Software Architect based out of 🇨🇦 ✈️ 🇮🇳
+My name is Abhishek Vaid, 
+ and I am a Software Architect based out of 🇨🇦 ✈️ 🇮🇳
 
 I graduated in Computer Science from [ABV IIITM, Gwalior](http://www.iiitm.ac.in) in year 2009. Since then I have: 
   - Taught in a university as a full-time Computer Science Lecturer
   - Co-Founded an AI startup [Humantic Ai](www.humantic.ai)
   - Worked as an EM / Architect in a large scale Consumer App [UrbanCompany](www.urbancompany.com)
   - Hustled as a Principal Engineer in a Deep tech Data Startup [Prophecy.io](www.prophecy.io)
+  - Managed multiple teams in Clipboard Health as Group EM for workplace group [Clipboard Health](www.clipboard.health)
 
-I'm extremely passionate about Software Engineering, Startups and Technology. I also love to Gaming, Cycling and Learning new tech. 
+I'm extremely passionate about Software Engineering, Startups and Technology. I also love to Gaming, Cycling and Learning new tech. Currently, trying to go into depths of AI / ML tech stack. 
