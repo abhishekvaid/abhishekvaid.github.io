@@ -5,8 +5,6 @@ permalink: /cv/
 author: vaidabhishek
 ---
 
-Here's my updated Resume (Updated: Oct 2024)
-
 [Link to Download](/assets/cv-2024.pdf)
 
 <div class="pdf-container">
