@@ -9,5 +9,4 @@ permalink: /technology/
 <h2>2024</h2>
 <ul>
     <li><a href="/technology/2024/06/10/frrole.ai-tech-stack-intro.html">Quick Intro to Frrole.ai Tech stack</a></li>
-    <!-- <li><a href="/management/2023/09/15/setting-kpis.html">Setting KPIs</a> - 2023-09-15</li> -->
 </ul>
