@@ -53,15 +53,20 @@ layout: default
     <footer class="post-footer">
       <p>Enjoyed this article? Share it:</p>
       <div class="share-buttons">
-        <a href="https://twitter.com/intent/tweet?url={{ site.url }}{{ page.url }}&text={{ page.title }}" target="_blank" class="twitter-share">
-          <i class="fab fa-twitter"></i> Share on Twitter
+        <a href="https://twitter.com/intent/tweet?url={{ site.url }}{{ page.url }}&text={{ page.title }}" target="_blank" class="twitter-share" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
         </a>
-        <a href="https://www.linkedin.com/shareArticle?url={{ site.url }}{{ page.url }}" target="_blank" class="linkedin-share">
-          <i class="fab fa-linkedin"></i> Share on LinkedIn
+        <a href="https://www.linkedin.com/shareArticle?url={{ site.url }}{{ page.url }}" target="_blank" class="linkedin-share" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
         </a>
-        <a href="mailto:?subject={{ page.title }}&body=Check this out: {{ site.url }}{{ page.url }}" class="email-share">
-          <i class="fas fa-envelope"></i> Share via Email
+        <a href="mailto:?subject={{ page.title }}&body=Check this out: {{ site.url }}{{ page.url }}" class="email-share" title="Share via Email">
+          <i class="fas fa-envelope"></i>
         </a>
+      </div>
+      <div class="like-button-container">
+        <button id="like-button" class="like-button">
+          <i class="fas fa-thumbs-up"></i> <span id="like-count">0</span>
+        </button>
       </div>
     </footer>
   </div>
@@ -83,6 +88,9 @@ layout: default
   </button>
   <button id="reset-font-size" class="toolbar-button" title="Reset Font Size">
     <i class="fas fa-undo"></i>
+  </button>
+  <button id="share-button" class="toolbar-button" title="Share this article">
+    <i class="fas fa-share-alt"></i>
   </button>
 </div>
 
@@ -246,6 +254,21 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.classList.add('dark-theme');
     document.getElementById('theme-toggle').querySelector('i').classList.replace('fa-moon', 'fa-sun');
   }
+
+  // Load likes from local storage
+  const likeButton = document.getElementById('like-button');
+  const likeCount = document.getElementById('like-count');
+  const articleId = "{{ page.url }}"; // Unique identifier for the article
+  let likes = JSON.parse(localStorage.getItem('likes')) || {};
+  if (likes[articleId]) {
+    likeCount.textContent = likes[articleId];
+  }
+
+  likeButton.addEventListener('click', function() {
+    likes[articleId] = (likes[articleId] || 0) + 1;
+    likeCount.textContent = likes[articleId];
+    localStorage.setItem('likes', JSON.stringify(likes));
+  });
 });
 
 // Save theme to local storage
@@ -283,6 +306,12 @@ document.getElementById('decrease-font-size').addEventListener('click', function
 document.getElementById('reset-font-size').addEventListener('click', function() {
   currentFontSize = defaultFontSize; // Reset font size to default
   document.body.style.fontSize = `${currentFontSize}px`;
+});
+
+// Share button functionality
+document.getElementById('share-button').addEventListener('click', function() {
+  const shareButtons = document.querySelector('.share-buttons');
+  shareButtons.style.display = shareButtons.style.display === 'flex' ? 'none' : 'flex';
 });
 
 // Calculate reading time
