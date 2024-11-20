@@ -72,6 +72,9 @@ layout: default
   <button id="toolbar-button" class="toolbar-button">
     <i class="fas fa-cog"></i>
   </button>
+  <button id="theme-toggle" class="toolbar-button">
+    <i class="fas fa-moon"></i>
+  </button>
 </div>
 
 <script>
@@ -225,6 +228,33 @@ document.addEventListener('DOMContentLoaded', function() {
   restoreTocState();
   window.addEventListener('scroll', handleScroll);
   handleScroll();
+  calculateReadingTime();
+  window.addEventListener('scroll', updateReadingProgress);
+  updateReadingProgress(); // Initial call
+
+  // Restore theme from local storage
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-theme');
+    document.getElementById('theme-toggle').querySelector('i').classList.replace('fa-moon', 'fa-sun');
+  }
+});
+
+// Save theme to local storage
+function saveTheme(theme) {
+  localStorage.setItem('theme', theme);
+}
+
+// Theme toggle functionality with local storage
+document.getElementById('theme-toggle').addEventListener('click', function() {
+  document.body.classList.toggle('dark-theme');
+  const icon = this.querySelector('i');
+  if (document.body.classList.contains('dark-theme')) {
+    icon.classList.replace('fa-moon', 'fa-sun');
+    saveTheme('dark');
+  } else {
+    icon.classList.replace('fa-sun', 'fa-moon');
+    saveTheme('light');
+  }
 });
 
 // Calculate reading time
@@ -251,12 +281,4 @@ function updateReadingProgress() {
     const percentage = Math.min(100, Math.max(0, scrollPercentage));
     progress.style.width = `${percentage}%`;
 }
-
-// Add to your DOMContentLoaded listener
-document.addEventListener('DOMContentLoaded', function() {
-    // ... existing code ...
-    calculateReadingTime();
-    window.addEventListener('scroll', updateReadingProgress);
-    updateReadingProgress(); // Initial call
-});
 </script>
