@@ -37,17 +37,14 @@ layout: default
       </p>
     </header>
 
+    <!-- Reading progress bar -->
+    <div class="reading-progress-bar" id="reading-progress"></div>
 
-
-<!-- Reading progress bar -->
-<div class="reading-progress-bar" id="reading-progress"></div>
-
-<!-- Reading time estimate -->
-<div class="reading-time">
-  <i class="fas fa-clock"></i>
-  <span id="reading-time-estimate"></span> min read
-</div>
-
+    <!-- Reading time estimate -->
+    <div class="reading-time">
+      <i class="fas fa-clock"></i>
+      <span id="reading-time-estimate"></span> min read
+    </div>
 
     <section class="post-content">
       {{ content }}
@@ -70,19 +67,26 @@ layout: default
   </div>
 </article>
 
+<!-- Vertical Toolbar -->
+<div id="vertical-toolbar" class="vertical-toolbar">
+  <button id="toolbar-button" class="toolbar-button">
+    <i class="fas fa-cog"></i>
+  </button>
+</div>
+
 <script>
 // Generate TOC from headers
 function generateTOC() {
   const headers = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id]');
   const tocList = document.getElementById('toc-list');
-  
+
   headers.forEach(header => {
     const level = parseInt(header.tagName[1]);
     const link = document.createElement('a');
     link.href = `#${header.id}`;
     link.textContent = header.textContent;
     link.classList.add('toc-link');
-    
+
     const li = document.createElement('li');
     li.classList.add(`toc-level-${level}`);
     li.appendChild(link);
@@ -99,7 +103,7 @@ function addHeaderLinks() {
             link.className = 'header-link';
             link.href = `#${header.id}`;
             link.innerHTML = '<i class="fas fa-link"></i>';
-            
+
             // Add click handler for copying
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -108,7 +112,7 @@ function addHeaderLinks() {
                     showToast();
                 });
             });
-            
+
             header.appendChild(link);
         }
     });
@@ -118,7 +122,7 @@ function addHeaderLinks() {
 function showToast() {
     const toast = document.getElementById('toast');
     toast.classList.add('show');
-    
+
     setTimeout(() => {
         toast.classList.remove('show');
     }, 2000);
@@ -145,7 +149,7 @@ document.getElementById('toc-toggle').addEventListener('click', function() {
   const toggleButton = document.getElementById('toc-toggle');
   const post = document.querySelector('.post');
   const icon = toggleButton.querySelector('i');
-  
+
   if (tocWrapper.classList.contains('collapsed')) {
     tocWrapper.classList.remove('collapsed');
     toggleButton.classList.remove('collapsed');
@@ -223,12 +227,6 @@ document.addEventListener('DOMContentLoaded', function() {
   handleScroll();
 });
 
-
-
-
-
-
-
 // Calculate reading time
 function calculateReadingTime() {
     const wordsPerMinute = 200; // Average reading speed
@@ -243,12 +241,12 @@ function updateReadingProgress() {
     const content = document.querySelector('.post-content');
     const contentBox = content.getBoundingClientRect();
     const progress = document.getElementById('reading-progress');
-    
+
     // Calculate how much has been scrolled
     const contentHeight = contentBox.height;
     const scrollPosition = -contentBox.top;
     const scrollPercentage = (scrollPosition / contentHeight) * 100;
-    
+
     // Ensure percentage stays between 0 and 100
     const percentage = Math.min(100, Math.max(0, scrollPercentage));
     progress.style.width = `${percentage}%`;
@@ -261,9 +259,4 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', updateReadingProgress);
     updateReadingProgress(); // Initial call
 });
-
-
-
-
-
 </script>

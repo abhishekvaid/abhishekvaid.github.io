@@ -1,0 +1,26 @@
+graph TB
+    subgraph Kubernetes Cluster
+        subgraph Control Plane
+            API[API Server]
+            S[Scheduler]
+            CM[Controller Manager]
+            E[etcd]
+        end
+        
+        subgraph Worker Nodes
+            subgraph Node 1
+                P1[Pod 1]
+                P2[Pod 2]
+            end
+            
+            subgraph Node 2
+                P3[Pod 3]
+                P4[Pod 4]
+            end
+            
+            subgraph Node 3
+                P5[Pod 5]
+                P6[Pod 6]
+            end
+        end
+    end

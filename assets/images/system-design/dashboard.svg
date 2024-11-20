@@ -1,0 +1,47 @@
+<svg viewBox="0 0 800 400">
+    <!-- Dashboard Background -->
+    <rect width="800" height="400" fill="#f8f9fa"/>
+    
+    <!-- Header -->
+    <rect x="0" y="0" width="800" height="60" fill="#ffffff"/>
+    <text x="20" y="35" fill="#2d3436" font-size="20">System Dashboard</text>
+    
+    <!-- Metrics Cards -->
+    <g transform="translate(20,80)">
+        <!-- CPU Usage Card -->
+        <rect width="180" height="100" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+        <text x="15" y="30" fill="#2d3436" font-size="14">CPU Usage</text>
+        <text x="15" y="60" fill="#2d3436" font-size="24">78%</text>
+        <path d="M15,70 L165,70" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="15" y="85" fill="#666" font-size="12">Last 24 hours</text>
+    </g>
+    
+    <g transform="translate(220,80)">
+        <!-- Memory Usage Card -->
+        <rect width="180" height="100" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+        <text x="15" y="30" fill="#2d3436" font-size="14">Memory Usage</text>
+        <text x="15" y="60" fill="#2d3436" font-size="24">64%</text>
+        <path d="M15,70 L165,70" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="15" y="85" fill="#666" font-size="12">Last 24 hours</text>
+    </g>
+    
+    <g transform="translate(420,80)">
+        <!-- Network I/O Card -->
+        <rect width="180" height="100" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+        <text x="15" y="30" fill="#2d3436" font-size="14">Network I/O</text>
+        <text x="15" y="60" fill="#2d3436" font-size="24">1.2 GB/s</text>
+        <path d="M15,70 L165,70" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="15" y="85" fill="#666" font-size="12">Current</text>
+    </g>
+    
+    <!-- Graph -->
+    <g transform="translate(20,200)">
+        <rect width="760" height="180" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+        <text x="15" y="30" fill="#2d3436" font-size="14">System Performance</text>
+        <path d="M40,140 L720,140" stroke="#e0e0e0" stroke-width="1"/>
+        <path d="M40,40 L720,40" stroke="#e0e0e0" stroke-width="0.5"/>
+        <path d="M40,90 L720,90" stroke="#e0e0e0" stroke-width="0.5"/>
+        <!-- Performance Line -->
+        <path d="M40,120 C200,100 400,60 720,90" stroke="#007bff" stroke-width="2" fill="none"/>
+    </g>
+</svg>
