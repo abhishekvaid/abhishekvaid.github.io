@@ -4,6 +4,16 @@ layout: default
 
 <link rel="stylesheet" href="{{ '/assets/css/custom-style.css' | relative_url }}">
 
+<!-- Toast notification -->
+<div id="toast" class="toast">
+  Link copied to clipboard!
+</div>
+
+<!-- Back to top button -->
+<button id="back-to-top" class="back-to-top hidden">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
 <!-- Toggle button for TOC -->
 <button id="toc-toggle" class="toc-toggle">
   <i class="fas fa-chevron-left"></i>
@@ -12,14 +22,7 @@ layout: default
 <!-- Table of Contents -->
 <div id="toc-wrapper" class="toc-wrapper">
   <h2>Table of Contents</h2>
-  <ul>
-    <li><a href="#why-leading-tech-teams-is-challenging">Why Leading Tech Teams is Challenging</a></li>
-    <li class="toc-level-2"><a href="#the-big-four-challenges">The Big Four Challenges</a></li>
-    <li class="toc-level-2"><a href="#challenge-1---expectations-what-how-and-when">Challenge #1 - Expectations, What, How and When!</a></li>
-    <li class="toc-level-3"><a href="#engineering-levels--competencies-matrix">Engineering Levels & Competencies Matrix</a></li>
-    <li class="toc-level-3"><a href="#example-staff-engineer-expectations">Example: Staff Engineer Expectations</a></li>
-    <li class="toc-level-3"><a href="#measuring-effectiveness">Measuring Effectiveness</a></li>
-  </ul>
+  <ul id="toc-list"></ul>
 </div>
 
 <article class="post">
@@ -56,6 +59,75 @@ layout: default
 </article>
 
 <script>
+// Generate TOC from headers
+function generateTOC() {
+  const headers = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id]');
+  const tocList = document.getElementById('toc-list');
+  
+  headers.forEach(header => {
+    const level = parseInt(header.tagName[1]);
+    const link = document.createElement('a');
+    link.href = `#${header.id}`;
+    link.textContent = header.textContent;
+    link.classList.add('toc-link');
+    
+    const li = document.createElement('li');
+    li.classList.add(`toc-level-${level}`);
+    li.appendChild(link);
+    tocList.appendChild(li);
+  });
+}
+
+// Add permalinks to headers with copy functionality
+function addHeaderLinks() {
+    const headers = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id]');
+    headers.forEach(header => {
+        if (!header.querySelector('.header-link')) {
+            const link = document.createElement('a');
+            link.className = 'header-link';
+            link.href = `#${header.id}`;
+            link.innerHTML = '<i class="fas fa-link"></i>';
+            
+            // Add click handler for copying
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = window.location.href.split('#')[0] + '#' + header.id;
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast();
+                });
+            });
+            
+            header.appendChild(link);
+        }
+    });
+}
+
+// Toast show/hide functionality
+function showToast() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 2000);
+}
+
+// Save and restore TOC state
+function saveTocState(isCollapsed) {
+  localStorage.setItem('tocCollapsed', isCollapsed);
+}
+
+function restoreTocState() {
+  const isCollapsed = localStorage.getItem('tocCollapsed') === 'true';
+  if (isCollapsed) {
+    document.getElementById('toc-wrapper').classList.add('collapsed');
+    document.getElementById('toc-toggle').classList.add('collapsed');
+    document.querySelector('.post').classList.add('toc-hidden');
+    document.querySelector('#toc-toggle i').classList.replace('fa-chevron-left', 'fa-chevron-right');
+  }
+}
+
+// TOC toggle functionality
 document.getElementById('toc-toggle').addEventListener('click', function() {
   const tocWrapper = document.getElementById('toc-wrapper');
   const toggleButton = document.getElementById('toc-toggle');
@@ -66,14 +138,76 @@ document.getElementById('toc-toggle').addEventListener('click', function() {
     tocWrapper.classList.remove('collapsed');
     toggleButton.classList.remove('collapsed');
     post.classList.remove('toc-hidden');
-    icon.classList.remove('fa-chevron-right');
-    icon.classList.add('fa-chevron-left');
+    icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+    saveTocState(false);
   } else {
     tocWrapper.classList.add('collapsed');
     toggleButton.classList.add('collapsed');
     post.classList.add('toc-hidden');
-    icon.classList.remove('fa-chevron-left');
-    icon.classList.add('fa-chevron-right');
+    icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+    saveTocState(true);
   }
+});
+
+// Smooth scrolling for TOC links
+document.getElementById('toc-list').addEventListener('click', (e) => {
+  if (e.target.classList.contains('toc-link')) {
+    e.preventDefault();
+    const targetId = e.target.getAttribute('href');
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      history.pushState(null, null, targetId);
+    }
+  }
+});
+
+// Back to top button
+const backToTopButton = document.getElementById('back-to-top');
+backToTopButton.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+// Highlight current section and handle back to top button visibility
+function handleScroll() {
+  // Back to top button visibility
+  if (window.scrollY > 300) {
+    backToTopButton.classList.remove('hidden');
+  } else {
+    backToTopButton.classList.add('hidden');
+  }
+
+  // Highlight current section
+  const headings = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id]');
+  let currentSection = null;
+
+  headings.forEach(heading => {
+    const rect = heading.getBoundingClientRect();
+    if (rect.top <= 100) {
+      currentSection = heading.id;
+    }
+  });
+
+  document.querySelectorAll('.toc-link').forEach(link => {
+    link.classList.remove('active');
+    if (currentSection && link.getAttribute('href') === `#${currentSection}`) {
+      link.classList.add('active');
+    }
+  });
+}
+
+// Initialize everything when the document is ready
+document.addEventListener('DOMContentLoaded', function() {
+  generateTOC();
+  addHeaderLinks();
+  restoreTocState();
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
 });
 </script>

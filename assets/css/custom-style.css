@@ -8,8 +8,11 @@
 }
 
 .post.toc-hidden {
-  width: 80%;
-  margin-left: 10%; /* Center the content when TOC is hidden */
+  width: 100%;
+  margin-left: 0;
+  padding: 0 3em;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .post-content-wrapper {
@@ -23,41 +26,23 @@
 .toc-wrapper {
   position: fixed;
   left: 0;
-  top: 100px;
+  top: 80px;
   width: 30%;
   padding: 20px;
   background-color: #fff;
   border-radius: 0 8px 8px 0;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  max-height: 80vh;
+  max-height: calc(100vh - 100px);
   overflow-y: auto;
   transition: transform 0.3s ease;
-  z-index: 1000;
+  z-index: 100;
+  transform: translateX(0);
 }
 
 .toc-wrapper.collapsed {
   transform: translateX(-100%);
 }
 
-.toc-toggle {
-  position: fixed;
-  left: 30%;
-  top: 120px;
-  background: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 0 4px 4px 0;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  z-index: 1001;
-  transition: all 0.3s ease;
-}
-
-.toc-toggle.collapsed {
-  left: 0;
-}
-
-/* TOC styling */
 .toc-wrapper h2 {
   font-size: 1.5rem;
   margin-bottom: 15px;
@@ -70,11 +55,11 @@
 }
 
 .toc-wrapper li {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   font-size: 0.9rem;
 }
 
-.toc-wrapper a {
+.toc-link {
   color: #666;
   text-decoration: none;
   transition: color 0.2s ease;
@@ -82,17 +67,188 @@
   padding: 3px 0;
 }
 
-.toc-wrapper a:hover {
+.toc-link:hover {
   color: #007bff;
 }
 
+.toc-link.active {
+  color: #007bff;
+  font-weight: 500;
+  background-color: rgba(0, 123, 255, 0.1);
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-left: -10px;
+}
+
 /* TOC indentation */
-.toc-level-2 {
-  margin-left: 15px;
+.toc-level-1 { margin-left: 0; }
+.toc-level-2 { margin-left: 15px; }
+.toc-level-3 { margin-left: 30px; }
+.toc-level-4 { margin-left: 45px; }
+
+/* Toggle button */
+.toc-toggle {
+  position: fixed;
+  left: 30%;
+  top: 100px;
+  background: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 101;
+  transition: all 0.3s ease;
 }
 
-.toc-level-3 {
-  margin-left: 30px;
+.toc-toggle.collapsed {
+  left: 0;
 }
 
-/* Rest of your existing CSS remains the same */
+.toc-toggle:hover {
+  background: #f0f0f0;
+}
+
+/* Back to top button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #007bff;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0.7;
+  z-index: 1000;
+}
+
+.back-to-top:hover {
+  opacity: 1;
+  transform: translateY(-3px);
+}
+
+.back-to-top.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+}
+
+/* Header permalink style */
+.header-link {
+  opacity: 0;
+  font-size: 0.8em;
+  padding-left: 0.375em;
+  text-decoration: none;
+  color: #999;
+  transition: opacity 0.2s ease-in-out;
+}
+
+h1:hover .header-link,
+h2:hover .header-link,
+h3:hover .header-link,
+h4:hover .header-link {
+  opacity: 1;
+}
+
+/* Toast notification */
+.toast {
+  visibility: hidden;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #333;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 4px;
+  z-index: 1000;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Post header and content styles */
+.post-header {
+  margin-bottom: 20px;
+}
+
+.post-title {
+  font-size: 2.5rem;
+  line-height: 1.3;
+  color: #333;
+}
+
+.post-meta {
+  font-size: 1rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+.post-content {
+  line-height: 1.8;
+  color: #333;
+}
+
+/* Share buttons */
+.post-footer {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.share-buttons a {
+  display: inline-block;
+  margin: 0 5px;
+  color: #333;
+  text-decoration: none;
+}
+
+.share-buttons a:hover {
+  color: #007bff;
+}
+
+.share-buttons i {
+  margin-right: 5px;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .post {
+      width: 70%;
+      margin-left: 30%;
+  }
+  .toc-wrapper {
+      width: 25%;
+  }
+  .toc-toggle {
+      left: 25%;
+  }
+}
+
+@media (max-width: 768px) {
+  .post {
+      width: 100%;
+      margin-left: 0;
+  }
+  .toc-wrapper {
+      width: 80%;
+  }
+  .toc-toggle {
+      left: 80%;
+  }
+  .post.toc-hidden {
+      padding: 0 1em;
+  }
+}
