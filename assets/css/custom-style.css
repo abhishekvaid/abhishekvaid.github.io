@@ -397,3 +397,30 @@ body.dark-theme .share-buttons a {
 body.dark-theme .share-buttons a:hover {
   color: #bb86fc;
 }
+
+/* Headings in dark theme */
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5,
+body.dark-theme h6 {
+  color: #ffffff; /* Ensure headings are white or another light color */
+}
+
+/* Additional styles for better readability */
+body.dark-theme .post-title {
+  color: #ffffff; /* Ensure the post title is white or another light color */
+}
+
+body.dark-theme .post-meta {
+  color: #bb86fc; /* Ensure the post meta is a light color */
+}
+
+body.dark-theme .reading-time {
+  color: #ffffff; /* Ensure the reading time is white or another light color */
+}
+
+body.dark-theme .reading-time i {
+  color: #bb86fc; /* Ensure the reading time icon is a light color */
+}
