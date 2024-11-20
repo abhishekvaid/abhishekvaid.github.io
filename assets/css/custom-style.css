@@ -1,25 +1,16 @@
-
-
-.post.toc-hidden {
-  width: 70%;
-  transform: translateX(-12.5%);
-  margin-left: 25%;
-}
-
-/* Main post layout */
+/* Core Layout */
 .post {
-  width: 65%;  /* Reduce from 100% */
+  width: 65%;
   max-width: 1024px;
-  margin: 0 auto;  /* This centers the post */
+  margin: 0 auto;
   padding: 20px;
   position: relative;
   overflow-x: hidden;
   transition: transform 0.3s ease;
 }
 
-/* Post content wrapper */
 .post-content-wrapper {
-  max-width: 100%;  /* Take full width of parent */
+  max-width: 100%;
   margin: 0 auto;
   background-color: #fff;
   padding: 20px;
@@ -27,7 +18,29 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Reading progress bar */
+/* Post Content Styles */
+.post-header {
+  margin-bottom: 20px;
+}
+
+.post-title {
+  font-size: 2.5rem;
+  line-height: 1.3;
+  color: #333;
+}
+
+.post-meta {
+  font-size: 1rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+.post-content {
+  line-height: 1.8;
+  color: #333;
+}
+
+/* Reading Utilities */
 .reading-progress-bar {
   position: fixed;
   top: 0;
@@ -39,7 +52,6 @@
   transition: width 0.1s ease;
 }
 
-/* Reading time estimate */
 .reading-time {
   display: inline-flex;
   align-items: center;
@@ -57,18 +69,17 @@
   font-size: 0.8rem;
 }
 
-/* TOC Wrapper adjustments */
+/* Table of Contents */
 .toc-wrapper {
   position: fixed;
   left: 20px;
-  /* Adjust top to match content */
-  top: 160px; /* Align with main content - adjust this value to match exactly */
+  top: 160px;
   width: calc((100% - 65%)/2 - 40px);
   padding: 15px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  max-height: calc(100vh - 180px); /* Adjusted to account for new top position */
+  max-height: calc(100vh - 180px);
   overflow-y: auto;
   transition: all 0.3s ease;
   z-index: 100;
@@ -118,67 +129,13 @@
   margin-left: -10px;
 }
 
-/* TOC indentation */
+/* TOC Levels */
 .toc-level-1 { margin-left: 0; }
 .toc-level-2 { margin-left: 15px; }
 .toc-level-3 { margin-left: 30px; }
 .toc-level-4 { margin-left: 45px; }
 
-/* Toggle button */
-.toc-toggle {
-  position: fixed;
-  left: 22%;
-  top: 100px;
-  background: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 0 4px 4px 0;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  z-index: 101;
-  transition: all 0.3s ease;
-}
-
-.toc-toggle.collapsed {
-  left: 0;
-}
-
-.toc-toggle:hover {
-  background: #f0f0f0;
-}
-
-/* Back to top button */
-.back-to-top {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background-color: #007bff;
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  opacity: 0.7;
-  z-index: 1000;
-}
-
-.back-to-top:hover {
-  opacity: 1;
-  transform: translateY(-3px);
-}
-
-.back-to-top.hidden {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-}
-
-/* Header permalink style */
+/* Header Links */
 .header-link {
   opacity: 0;
   font-size: 0.8em;
@@ -195,7 +152,7 @@ h4:hover .header-link {
   opacity: 1;
 }
 
-/* Toast notification */
+/* Notifications */
 .toast {
   visibility: hidden;
   position: fixed;
@@ -218,29 +175,76 @@ h4:hover .header-link {
   transform: translateY(0);
 }
 
-/* Post header and content styles */
-.post-header {
-  margin-bottom: 20px;
+/* Toolbar and Buttons */
+.vertical-toolbar {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
 }
 
-.post-title {
-  font-size: 2.5rem;
-  line-height: 1.3;
-  color: #333;
+.toolbar-button,
+.back-to-top,
+#increase-font-size,
+#decrease-font-size,
+#reset-font-size,
+#share-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
 }
 
-.post-meta {
-  font-size: 1rem;
-  color: #666;
-  margin-top: 10px;
+.toolbar-button:hover,
+.back-to-top:hover,
+#increase-font-size:hover,
+#decrease-font-size:hover,
+#reset-font-size:hover,
+#share-button:hover {
+  background-color: #0056b3;
 }
 
-.post-content {
-  line-height: 1.8;
-  color: #333;
+.toolbar-button i {
+  font-size: 18px;
 }
 
-/* Share buttons */
+/* Specific button adjustments */
+#increase-font-size i { font-size: 24px; }
+#decrease-font-size i { font-size: 12px; }
+#reset-font-size i { font-size: 18px; }
+
+/* Back to top button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  opacity: 0.7;
+}
+
+.back-to-top:hover {
+  opacity: 1;
+  transform: translateY(-3px);
+}
+
+.back-to-top.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+}
+
+/* Share functionality */
 .post-footer {
   margin-top: 40px;
   text-align: center;
@@ -263,14 +267,14 @@ h4:hover .header-link {
 }
 
 .share-buttons a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: #007bff;
   color: white;
   border-radius: 50%;
   width: 40px;
   height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
@@ -283,7 +287,7 @@ h4:hover .header-link {
   font-size: 18px;
 }
 
-/* Like button */
+/* Like Button */
 .like-button-container {
   margin-top: 20px;
   text-align: center;
@@ -315,122 +319,52 @@ h4:hover .header-link {
   font-size: 16px;
 }
 
-/* Responsive design */
-@media (max-width: 1200px) {
-  .post {
-      width: 75%;
-      margin-left: 23%;
-  }
-  .post.toc-hidden {
-      width: 75%;
-      transform: translateX(-23%);
-  }
-  .toc-wrapper {
-      width: 20%;
-  }
-  .toc-toggle {
-      left: 20%;
-  }
-}
-
-@media (max-width: 768px) {
-  .post {
-      width: 100%;
-      margin-left: 0;
-  }
-  .post.toc-hidden {
-      width: 100%;
-      transform: translateX(0);
-  }
-  .toc-wrapper {
-      width: 80%;
-  }
-  .toc-toggle {
-      left: 80%;
-  }
-}
-
-/* Vertical Toolbar */
-.vertical-toolbar {
-  position: fixed;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 1000;
-}
-
-.toolbar-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-bottom: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.toolbar-button:hover {
-  background-color: #0056b3;
-}
-
-.toolbar-button i {
-  font-size: 18px;
-}
-
-/* Dark theme styles */
+/* Dark Theme */
 body.dark-theme {
   background-color: #121212;
   color: #e0e0e0;
 }
 
+body.dark-theme .post-content-wrapper,
+body.dark-theme .toc-wrapper,
 body.dark-theme .post {
   background-color: #1e1e1e;
   color: #e0e0e0;
 }
 
-body.dark-theme .post-content-wrapper {
-  background-color: #1e1e1e;
-}
-
-body.dark-theme .reading-time {
-  background: rgba(255, 255, 255, 0.1);
-  color: #e0e0e0;
-}
-
-body.dark-theme .reading-time i {
-  color: #e0e0e0;
-}
-
-body.dark-theme .toc-wrapper {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-}
-
-body.dark-theme .toc-link {
-  color: #e0e0e0;
-}
-
-body.dark-theme .toc-link:hover {
-  color: #bb86fc;
-}
-
+body.dark-theme .reading-time,
 body.dark-theme .toc-link.active {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-body.dark-theme .vertical-toolbar .toolbar-button {
+body.dark-theme .reading-time,
+body.dark-theme .reading-time i,
+body.dark-theme .toc-link,
+body.dark-theme .post-header,
+body.dark-theme .post-content,
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5,
+body.dark-theme h6,
+body.dark-theme .post-title {
+  color: #e0e0e0;
+}
+
+body.dark-theme .toc-link:hover,
+body.dark-theme .post-meta,
+body.dark-theme .reading-time i {
+  color: #bb86fc;
+}
+
+body.dark-theme .vertical-toolbar .toolbar-button,
+body.dark-theme .share-buttons a {
   background-color: #3700b3;
 }
 
-body.dark-theme .vertical-toolbar .toolbar-button:hover {
+body.dark-theme .vertical-toolbar .toolbar-button:hover,
+body.dark-theme .share-buttons a:hover {
   background-color: #6200ea;
 }
 
@@ -438,163 +372,29 @@ body.dark-theme .toast {
   background-color: #3700b3;
 }
 
-body.dark-theme .post-header {
-  color: #e0e0e0;
-}
-
-body.dark-theme .post-meta {
-  color: #e0e0e0;
-}
-
-body.dark-theme .post-content {
-  color: #e0e0e0;
-}
-
-body.dark-theme .share-buttons a {
-  background-color: #3700b3;
-  color: #e0e0e0;
-}
-
-body.dark-theme .share-buttons a:hover {
-  background-color: #6200ea;
-}
-
-/* Headings in dark theme */
-body.dark-theme h1,
-body.dark-theme h2,
-body.dark-theme h3,
-body.dark-theme h4,
-body.dark-theme h5,
-body.dark-theme h6 {
-  color: #ffffff; /* Ensure headings are white or another light color */
-}
-
-/* Additional styles for better readability */
-body.dark-theme .post-title {
-  color: #ffffff; /* Ensure the post title is white or another light color */
-}
-
-body.dark-theme .post-meta {
-  color: #bb86fc; /* Ensure the post meta is a light color */
-}
-
-body.dark-theme .reading-time {
-  color: #ffffff; /* Ensure the reading time is white or another light color */
-}
-
-body.dark-theme .reading-time i {
-  color: #bb86fc; /* Ensure the reading time icon is a light color */
-}
-
-/* Increase font size button */
-#increase-font-size {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-bottom: 10px;
-  transition: background-color 0.3s ease;
-}
-
-#increase-font-size:hover {
-  background-color: #0056b3;
-}
-
-#increase-font-size i {
-  font-size: 24px;
-}
-
-/* Decrease font size button */
-#decrease-font-size {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-bottom: 10px;
-  transition: background-color 0.3s ease;
-}
-
-#decrease-font-size:hover {
-  background-color: #0056b3;
-}
-
-#decrease-font-size i {
-  font-size: 12px;
-}
-
-/* Reset font size button */
-#reset-font-size {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-bottom: 10px;
-  transition: background-color 0.3s ease;
-}
-
-#reset-font-size:hover {
-  background-color: #0056b3;
-}
-
-#reset-font-size i {
-  font-size: 18px;
-}
-
-/* Share button */
-#share-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-bottom: 10px;
-  transition: background-color 0.3s ease;
-}
-
-#share-button:hover {
-  background-color: #0056b3;
-}
-
-#share-button i {
-  font-size: 18px;
-}
-
-
-
-
-/* Responsive adjustments */
+/* Media Queries */
 @media (max-width: 1200px) {
   .post {
     width: 75%;
+  }
+  
+  .toc-wrapper {
+    width: calc((100% - 75%)/2 - 40px);
   }
 }
 
 @media (max-width: 768px) {
   .post {
     width: 85%;
+  }
+  
+  .toc-wrapper {
+    width: 250px;
+    left: 10px;
+  }
+  
+  .vertical-toolbar {
+    right: 10px;
   }
 }
 
@@ -603,35 +403,8 @@ body.dark-theme .reading-time i {
     width: 95%;
     padding: 10px;
   }
-}
-
-
-/* Responsive adjustments for TOC */
-@media (max-width: 1200px) {
+  
   .toc-wrapper {
-    width: 220px;
-    left: calc((100% - 75%)/4);
-  }
-}
-
-@media (max-width: 768px) {
-  .toc-wrapper {
-    width: 200px;
-    left: 10px; /* Fixed distance from left on mobile */
-  }
-}
-
-
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-  .toc-wrapper {
-    width: calc((100% - 75%)/2 - 40px);
-  }
-}
-
-@media (max-width: 768px) {
-  .toc-wrapper {
-    left: 10px;
-    width: 250px;
+    width: 80%;
   }
 }
