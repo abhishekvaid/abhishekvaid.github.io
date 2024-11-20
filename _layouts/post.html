@@ -2,11 +2,78 @@
 layout: default
 ---
 
-<article>
-  <header>
-    <h1>{{ page.title }}</h1>
-    <!-- <p>Published on {{ page.date | date: "%B %d, %Y" }}</p> -->
-  </header>
+<link rel="stylesheet" href="{{ '/assets/css/custom-style.css' | relative_url }}">
 
-  {{ content }}
+<!-- Toggle button for TOC -->
+<button id="toc-toggle" class="toc-toggle">
+  <i class="fas fa-chevron-left"></i>
+</button>
+
+<!-- Table of Contents -->
+<div id="toc-wrapper" class="toc-wrapper">
+  <h2>Table of Contents</h2>
+  <ul>
+    <li><a href="#why-leading-tech-teams-is-challenging">Why Leading Tech Teams is Challenging</a></li>
+    <li class="toc-level-2"><a href="#the-big-four-challenges">The Big Four Challenges</a></li>
+    <li class="toc-level-2"><a href="#challenge-1---expectations-what-how-and-when">Challenge #1 - Expectations, What, How and When!</a></li>
+    <li class="toc-level-3"><a href="#engineering-levels--competencies-matrix">Engineering Levels & Competencies Matrix</a></li>
+    <li class="toc-level-3"><a href="#example-staff-engineer-expectations">Example: Staff Engineer Expectations</a></li>
+    <li class="toc-level-3"><a href="#measuring-effectiveness">Measuring Effectiveness</a></li>
+  </ul>
+</div>
+
+<article class="post">
+  <div class="post-content-wrapper">
+    <header class="post-header">
+      <h1 class="post-title">{{ page.title }}</h1>
+      <p class="post-meta">
+        Published on <time datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%B %d, %Y" }}</time>
+        {% if page.author %}
+          by <span class="author">{{ page.author }}</span>
+        {% endif %}
+      </p>
+    </header>
+
+    <section class="post-content">
+      {{ content }}
+    </section>
+
+    <footer class="post-footer">
+      <p>Enjoyed this article? Share it:</p>
+      <div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?url={{ site.url }}{{ page.url }}&text={{ page.title }}" target="_blank" class="twitter-share">
+          <i class="fab fa-twitter"></i> Share on Twitter
+        </a>
+        <a href="https://www.linkedin.com/shareArticle?url={{ site.url }}{{ page.url }}" target="_blank" class="linkedin-share">
+          <i class="fab fa-linkedin"></i> Share on LinkedIn
+        </a>
+        <a href="mailto:?subject={{ page.title }}&body=Check this out: {{ site.url }}{{ page.url }}" class="email-share">
+          <i class="fas fa-envelope"></i> Share via Email
+        </a>
+      </div>
+    </footer>
+  </div>
 </article>
+
+<script>
+document.getElementById('toc-toggle').addEventListener('click', function() {
+  const tocWrapper = document.getElementById('toc-wrapper');
+  const toggleButton = document.getElementById('toc-toggle');
+  const post = document.querySelector('.post');
+  const icon = toggleButton.querySelector('i');
+  
+  if (tocWrapper.classList.contains('collapsed')) {
+    tocWrapper.classList.remove('collapsed');
+    toggleButton.classList.remove('collapsed');
+    post.classList.remove('toc-hidden');
+    icon.classList.remove('fa-chevron-right');
+    icon.classList.add('fa-chevron-left');
+  } else {
+    tocWrapper.classList.add('collapsed');
+    toggleButton.classList.add('collapsed');
+    post.classList.add('toc-hidden');
+    icon.classList.remove('fa-chevron-left');
+    icon.classList.add('fa-chevron-right');
+  }
+});
+</script>

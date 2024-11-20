@@ -1,0 +1,98 @@
+/* Main post layout */
+.post {
+  width: 60%;
+  margin-left: 35%;
+  padding: 20px;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+}
+
+.post.toc-hidden {
+  width: 80%;
+  margin-left: 10%; /* Center the content when TOC is hidden */
+}
+
+.post-content-wrapper {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Table of Contents */
+.toc-wrapper {
+  position: fixed;
+  left: 0;
+  top: 100px;
+  width: 30%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  max-height: 80vh;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.toc-wrapper.collapsed {
+  transform: translateX(-100%);
+}
+
+.toc-toggle {
+  position: fixed;
+  left: 30%;
+  top: 120px;
+  background: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+.toc-toggle.collapsed {
+  left: 0;
+}
+
+/* TOC styling */
+.toc-wrapper h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.toc-wrapper ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.toc-wrapper li {
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.toc-wrapper a {
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: block;
+  padding: 3px 0;
+}
+
+.toc-wrapper a:hover {
+  color: #007bff;
+}
+
+/* TOC indentation */
+.toc-level-2 {
+  margin-left: 15px;
+}
+
+.toc-level-3 {
+  margin-left: 30px;
+}
+
+/* Rest of your existing CSS remains the same */
