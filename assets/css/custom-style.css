@@ -424,3 +424,75 @@ body.dark-theme .reading-time {
 body.dark-theme .reading-time i {
   color: #bb86fc; /* Ensure the reading time icon is a light color */
 }
+
+/* Increase font size button */
+#increase-font-size {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+#increase-font-size:hover {
+  background-color: #0056b3;
+}
+
+#increase-font-size i {
+  font-size: 18px;
+}
+
+/* Decrease font size button */
+#decrease-font-size {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+#decrease-font-size:hover {
+  background-color: #0056b3;
+}
+
+#decrease-font-size i {
+  font-size: 18px;
+}
+
+/* Reset font size button */
+#reset-font-size {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+#reset-font-size:hover {
+  background-color: #0056b3;
+}
+
+#reset-font-size i {
+  font-size: 18px;
+}
