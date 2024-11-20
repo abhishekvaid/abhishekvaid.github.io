@@ -315,6 +315,7 @@ h4:hover .header-link {
   cursor: pointer;
   margin-bottom: 10px;
   transition: background-color 0.3s ease;
+  position: relative;
 }
 
 .toolbar-button:hover {
@@ -323,6 +324,21 @@ h4:hover .header-link {
 
 .toolbar-button i {
   font-size: 18px;
+}
+
+/* Tooltip styles */
+.toolbar-button:hover::after {
+  content: attr(title);
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 12px;
+  margin-left: -60px; /* Adjust the position to the left */
+  white-space: nowrap;
+  z-index: 1000;
 }
 
 /* Dark theme styles */
@@ -446,7 +462,7 @@ body.dark-theme .reading-time i {
 }
 
 #increase-font-size i {
-  font-size: 18px;
+  font-size: 24px;
 }
 
 /* Decrease font size button */
@@ -470,7 +486,7 @@ body.dark-theme .reading-time i {
 }
 
 #decrease-font-size i {
-  font-size: 18px;
+  font-size: 12px;
 }
 
 /* Reset font size button */
