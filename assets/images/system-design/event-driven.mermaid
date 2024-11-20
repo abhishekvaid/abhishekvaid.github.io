@@ -1,0 +1,23 @@
+graph LR
+    subgraph Producers
+        O[Order Service]
+        P[Payment Service]
+        U[User Service]
+    end
+    
+    subgraph Event Bus
+        K[Kafka/RabbitMQ]
+    end
+    
+    subgraph Consumers
+        N[Notification Service]
+        A[Analytics Service]
+        W[Warehouse Service]
+    end
+    
+    O --> K
+    P --> K
+    U --> K
+    K --> N
+    K --> A
+    K --> W

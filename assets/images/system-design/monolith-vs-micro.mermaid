@@ -1,0 +1,24 @@
+graph TB
+    subgraph Monolithic Architecture
+        Client1[Client] --> Monolith
+        subgraph Monolith[Monolithic Application]
+            UI[UI Layer]
+            BL[Business Logic]
+            DL[Data Layer]
+            UI --> BL
+            BL --> DL
+        end
+        Monolith --> DB[(Database)]
+    end
+    
+    subgraph Microservices Architecture
+        Client2[Client] --> API[API Gateway]
+        API --> Auth[Auth Service]
+        API --> Users[User Service]
+        API --> Orders[Order Service]
+        API --> Products[Product Service]
+        Auth --> AuthDB[(Auth DB)]
+        Users --> UserDB[(User DB)]
+        Orders --> OrderDB[(Order DB)]
+        Products --> ProductDB[(Product DB)]
+    end

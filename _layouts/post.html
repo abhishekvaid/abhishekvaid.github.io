@@ -2,11 +2,340 @@
 layout: default
 ---
 
-<article>
-  <header>
-    <h1>{{ page.title }}</h1>
-    <!-- <p>Published on {{ page.date | date: "%B %d, %Y" }}</p> -->
-  </header>
+<link rel="stylesheet" href="{{ '/assets/css/custom-style.css' | relative_url }}">
 
-  {{ content }}
+<!-- Toast notification -->
+<div id="toast" class="toast">
+  Link copied to clipboard!
+</div>
+
+<!-- Back to top button -->
+<button id="back-to-top" class="back-to-top hidden">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Toggle button for TOC -->
+<button id="toc-toggle" class="toc-toggle">
+  <i class="fas fa-chevron-left"></i>
+</button>
+
+<!-- Table of Contents -->
+<div id="toc-wrapper" class="toc-wrapper">
+  <h2>Table of Contents</h2>
+  <ul id="toc-list"></ul>
+</div>
+
+<article class="post">
+  <div class="post-content-wrapper">
+    <header class="post-header">
+      <h1 class="post-title">{{ page.title }}</h1>
+      <p class="post-meta">
+        Published on <time datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%B %d, %Y" }}</time>
+        {% if page.author %}
+          by <span class="author">{{ page.author }}</span>
+        {% endif %}
+      </p>
+    </header>
+
+    <!-- Reading progress bar -->
+    <div class="reading-progress-bar" id="reading-progress"></div>
+
+    <!-- Reading time estimate -->
+    <div class="reading-time">
+      <i class="fas fa-clock"></i>
+      <span id="reading-time-estimate"></span> min read
+    </div>
+
+    <section class="post-content">
+      {{ content }}
+    </section>
+
+    <footer class="post-footer">
+      <p>Enjoyed this article? Share it:</p>
+      <div class="share-buttons">
+        <a href="https://twitter.com/intent/tweet?url={{ site.url }}{{ page.url }}&text={{ page.title }}" target="_blank" class="twitter-share" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://www.linkedin.com/shareArticle?url={{ site.url }}{{ page.url }}" target="_blank" class="linkedin-share" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="mailto:?subject={{ page.title }}&body=Check this out: {{ site.url }}{{ page.url }}" class="email-share" title="Share via Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+      <div class="like-button-container">
+        <button id="like-button" class="like-button">
+          <i class="fas fa-thumbs-up"></i> <span id="like-count">0</span>
+        </button>
+      </div>
+    </footer>
+  </div>
 </article>
+
+<!-- Vertical Toolbar -->
+<div id="vertical-toolbar" class="vertical-toolbar">
+  <button id="toolbar-button" class="toolbar-button" title="Settings">
+    <i class="fas fa-cog"></i>
+  </button>
+  <button id="theme-toggle" class="toolbar-button" title="Toggle Dark/Light Theme">
+    <i class="fas fa-moon"></i>
+  </button>
+  <button id="increase-font-size" class="toolbar-button" title="Increase Font Size">
+    <i class="fas fa-font" style="font-size: 24px;"></i>
+  </button>
+  <button id="decrease-font-size" class="toolbar-button" title="Decrease Font Size">
+    <i class="fas fa-font" style="font-size: 12px;"></i>
+  </button>
+  <button id="reset-font-size" class="toolbar-button" title="Reset Font Size">
+    <i class="fas fa-undo"></i>
+  </button>
+  <button id="share-button" class="toolbar-button" title="Share this article">
+    <i class="fas fa-share-alt"></i>
+  </button>
+</div>
+
+<script>
+// Generate TOC from headers
+function generateTOC() {
+  const headers = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id]');
+  const tocList = document.getElementById('toc-list');
+
+  headers.forEach(header => {
+    const level = parseInt(header.tagName[1]);
+    const link = document.createElement('a');
+    link.href = `#${header.id}`;
+    link.textContent = header.textContent;
+    link.classList.add('toc-link');
+
+    const li = document.createElement('li');
+    li.classList.add(`toc-level-${level}`);
+    li.appendChild(link);
+    tocList.appendChild(li);
+  });
+}
+
+// Add permalinks to headers with copy functionality
+function addHeaderLinks() {
+    const headers = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id]');
+    headers.forEach(header => {
+        if (!header.querySelector('.header-link')) {
+            const link = document.createElement('a');
+            link.className = 'header-link';
+            link.href = `#${header.id}`;
+            link.innerHTML = '<i class="fas fa-link"></i>';
+
+            // Add click handler for copying
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = window.location.href.split('#')[0] + '#' + header.id;
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast();
+                });
+            });
+
+            header.appendChild(link);
+        }
+    });
+}
+
+// Toast show/hide functionality
+function showToast() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 2000);
+}
+
+// Save and restore TOC state
+function saveTocState(isCollapsed) {
+  localStorage.setItem('tocCollapsed', isCollapsed);
+}
+
+function restoreTocState() {
+  const isCollapsed = localStorage.getItem('tocCollapsed') === 'true';
+  if (isCollapsed) {
+    document.getElementById('toc-wrapper').classList.add('collapsed');
+    document.getElementById('toc-toggle').classList.add('collapsed');
+    document.querySelector('.post').classList.add('toc-hidden');
+    document.querySelector('#toc-toggle i').classList.replace('fa-chevron-left', 'fa-chevron-right');
+  }
+}
+
+// TOC toggle functionality
+document.getElementById('toc-toggle').addEventListener('click', function() {
+  const tocWrapper = document.getElementById('toc-wrapper');
+  const toggleButton = document.getElementById('toc-toggle');
+  const post = document.querySelector('.post');
+  const icon = toggleButton.querySelector('i');
+
+  if (tocWrapper.classList.contains('collapsed')) {
+    tocWrapper.classList.remove('collapsed');
+    toggleButton.classList.remove('collapsed');
+    post.classList.remove('toc-hidden');
+    icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+    saveTocState(false);
+  } else {
+    tocWrapper.classList.add('collapsed');
+    toggleButton.classList.add('collapsed');
+    post.classList.add('toc-hidden');
+    icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+    saveTocState(true);
+  }
+});
+
+// Smooth scrolling for TOC links
+document.getElementById('toc-list').addEventListener('click', (e) => {
+  if (e.target.classList.contains('toc-link')) {
+    e.preventDefault();
+    const targetId = e.target.getAttribute('href');
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      history.pushState(null, null, targetId);
+    }
+  }
+});
+
+// Back to top button
+const backToTopButton = document.getElementById('back-to-top');
+backToTopButton.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+// Highlight current section and handle back to top button visibility
+function handleScroll() {
+  // Back to top button visibility
+  if (window.scrollY > 300) {
+    backToTopButton.classList.remove('hidden');
+  } else {
+    backToTopButton.classList.add('hidden');
+  }
+
+  // Highlight current section
+  const headings = document.querySelectorAll('h1[id], h2[id], h3[id], h4[id]');
+  let currentSection = null;
+
+  headings.forEach(heading => {
+    const rect = heading.getBoundingClientRect();
+    if (rect.top <= 100) {
+      currentSection = heading.id;
+    }
+  });
+
+  document.querySelectorAll('.toc-link').forEach(link => {
+    link.classList.remove('active');
+    if (currentSection && link.getAttribute('href') === `#${currentSection}`) {
+      link.classList.add('active');
+    }
+  });
+}
+
+// Initialize everything when the document is ready
+document.addEventListener('DOMContentLoaded', function() {
+  generateTOC();
+  addHeaderLinks();
+  restoreTocState();
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+  calculateReadingTime();
+  window.addEventListener('scroll', updateReadingProgress);
+  updateReadingProgress(); // Initial call
+
+  // Restore theme from local storage
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-theme');
+    document.getElementById('theme-toggle').querySelector('i').classList.replace('fa-moon', 'fa-sun');
+  }
+
+  // Load likes from local storage
+  const likeButton = document.getElementById('like-button');
+  const likeCount = document.getElementById('like-count');
+  const articleId = "{{ page.url }}"; // Unique identifier for the article
+  let likes = JSON.parse(localStorage.getItem('likes')) || {};
+  if (likes[articleId]) {
+    likeCount.textContent = likes[articleId];
+  }
+
+  likeButton.addEventListener('click', function() {
+    likes[articleId] = (likes[articleId] || 0) + 1;
+    likeCount.textContent = likes[articleId];
+    localStorage.setItem('likes', JSON.stringify(likes));
+  });
+});
+
+// Save theme to local storage
+function saveTheme(theme) {
+  localStorage.setItem('theme', theme);
+}
+
+// Theme toggle functionality with local storage
+document.getElementById('theme-toggle').addEventListener('click', function() {
+  document.body.classList.toggle('dark-theme');
+  const icon = this.querySelector('i');
+  if (document.body.classList.contains('dark-theme')) {
+    icon.classList.replace('fa-moon', 'fa-sun');
+    saveTheme('dark');
+  } else {
+    icon.classList.replace('fa-sun', 'fa-moon');
+    saveTheme('light');
+  }
+});
+
+// Font size adjustment functionality
+const defaultFontSize = parseFloat(getComputedStyle(document.body).fontSize);
+let currentFontSize = defaultFontSize;
+
+document.getElementById('increase-font-size').addEventListener('click', function() {
+  currentFontSize += 2; // Increase font size by 2px
+  document.body.style.fontSize = `${currentFontSize}px`;
+});
+
+document.getElementById('decrease-font-size').addEventListener('click', function() {
+  currentFontSize -= 2; // Decrease font size by 2px
+  document.body.style.fontSize = `${currentFontSize}px`;
+});
+
+document.getElementById('reset-font-size').addEventListener('click', function() {
+  currentFontSize = defaultFontSize; // Reset font size to default
+  document.body.style.fontSize = `${currentFontSize}px`;
+});
+
+// Share button functionality
+document.getElementById('share-button').addEventListener('click', function() {
+  const shareButtons = document.querySelector('.share-buttons');
+  shareButtons.style.display = shareButtons.style.display === 'flex' ? 'none' : 'flex';
+});
+
+// Calculate reading time
+function calculateReadingTime() {
+    const wordsPerMinute = 200; // Average reading speed
+    const content = document.querySelector('.post-content').textContent;
+    const words = content.trim().split(/\s+/).length;
+    const readingTime = Math.ceil(words / wordsPerMinute);
+    document.getElementById('reading-time-estimate').textContent = readingTime;
+}
+
+// Update reading progress bar
+function updateReadingProgress() {
+    const content = document.querySelector('.post-content');
+    const contentBox = content.getBoundingClientRect();
+    const progress = document.getElementById('reading-progress');
+
+    // Calculate how much has been scrolled
+    const contentHeight = contentBox.height;
+    const scrollPosition = -contentBox.top;
+    const scrollPercentage = (scrollPosition / contentHeight) * 100;
+
+    // Ensure percentage stays between 0 and 100
+    const percentage = Math.min(100, Math.max(0, scrollPercentage));
+    progress.style.width = `${percentage}%`;
+}
+</script>
