@@ -14,17 +14,6 @@ layout: default
   <i class="fas fa-arrow-up"></i>
 </button>
 
-<!-- Toggle button for TOC -->
-<button id="toc-toggle" class="toc-toggle">
-  <i class="fas fa-chevron-right"></i>
-</button>
-
-<!-- Table of Contents -->
-<div id="toc-wrapper" class="toc-wrapper collapsed">
-  <h2>Table of Contents</h2>
-  <ul id="toc-list"></ul>
-</div>
-
 <article class="post">
   <div class="post-content-wrapper">
     <header class="post-header">
@@ -74,8 +63,8 @@ layout: default
 
 <!-- Vertical Toolbar -->
 <div id="vertical-toolbar" class="vertical-toolbar">
-  <button id="toolbar-button" class="toolbar-button">
-    <i class="fas fa-cog"></i>
+  <button id="toc-button" class="toolbar-button">
+    <i class="fas fa-list-ul"></i>
   </button>
   <button id="theme-toggle" class="toolbar-button">
     <i class="fas fa-moon"></i>
@@ -92,6 +81,12 @@ layout: default
   <button id="share-button" class="toolbar-button">
     <i class="fas fa-share-alt"></i>
   </button>
+</div>
+
+<!-- TOC Wrapper -->
+<div id="toc-wrapper" class="toc-wrapper collapsed">
+  <h2>Table of Contents</h2>
+  <ul id="toc-list"></ul>
 </div>
 
 <script>
@@ -148,56 +143,18 @@ function showToast() {
     }, 2000);
 }
 
-// Save and restore TOC state
-function saveTocState(isCollapsed) {
-  localStorage.setItem('tocCollapsed', isCollapsed);
-}
-
-function restoreTocState() {
-  const isCollapsed = localStorage.getItem('tocCollapsed') === 'true';
-  if (isCollapsed) {
-    document.getElementById('toc-wrapper').classList.add('collapsed');
-    document.getElementById('toc-toggle').classList.add('collapsed');
-    document.querySelector('.post').classList.add('toc-hidden');
-    document.querySelector('#toc-toggle i').classList.replace('fa-chevron-left', 'fa-chevron-right');
-  }
-}
-
 // TOC toggle functionality
-document.getElementById('toc-toggle').addEventListener('click', function() {
+document.getElementById('toc-button').addEventListener('click', function() {
   const tocWrapper = document.getElementById('toc-wrapper');
-  const toggleButton = document.getElementById('toc-toggle');
-  const post = document.querySelector('.post');
-  const icon = toggleButton.querySelector('i');
+  const button = this;
+  const icon = button.querySelector('i');
 
   if (tocWrapper.classList.contains('collapsed')) {
     tocWrapper.classList.remove('collapsed');
-    toggleButton.classList.remove('collapsed');
-    post.classList.remove('toc-hidden');
-    icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
-    saveTocState(false);
+    icon.classList.replace('fa-list-ul', 'fa-times');
   } else {
     tocWrapper.classList.add('collapsed');
-    toggleButton.classList.add('collapsed');
-    post.classList.add('toc-hidden');
-    icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
-    saveTocState(true);
-  }
-});
-
-// Smooth scrolling for TOC links
-document.getElementById('toc-list').addEventListener('click', (e) => {
-  if (e.target.classList.contains('toc-link')) {
-    e.preventDefault();
-    const targetId = e.target.getAttribute('href');
-    const targetElement = document.querySelector(targetId);
-    if (targetElement) {
-      targetElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-      history.pushState(null, null, targetId);
-    }
+    icon.classList.replace('fa-times', 'fa-list-ul');
   }
 });
 
@@ -242,7 +199,6 @@ function handleScroll() {
 document.addEventListener('DOMContentLoaded', function() {
   generateTOC();
   addHeaderLinks();
-  restoreTocState();
   window.addEventListener('scroll', handleScroll);
   handleScroll();
   calculateReadingTime();
