@@ -1,25 +1,56 @@
 /* Main post layout */
 .post {
-  width: 60%;
-  margin-left: 35%;
+  width: 70%;
+  margin-left: 25%;
   padding: 20px;
   overflow-x: hidden;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
+  position: relative;
 }
 
 .post.toc-hidden {
-  width: 100%;
-  margin-left: 0;
-  padding: 0 3em;
-  max-width: 1280px;
-  margin: 0 auto;
+  width: 70%;
+  transform: translateX(-12.5%);
+  margin-left: 25%;
 }
 
 .post-content-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Reading progress bar */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: #007bff;
+  z-index: 1000;
+  width: 0;
+  transition: width 0.1s ease;
+}
+
+/* Reading time estimate */
+.reading-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 20px;
+  padding: 4px 8px;
+  background: rgba(0, 123, 255, 0.1);
+  border-radius: 4px;
+}
+
+.reading-time i {
+  color: #007bff;
+  font-size: 0.8rem;
 }
 
 /* Table of Contents */
@@ -27,8 +58,8 @@
   position: fixed;
   left: 0;
   top: 80px;
-  width: 30%;
-  padding: 20px;
+  width: 22%;
+  padding: 15px;
   background-color: #fff;
   border-radius: 0 8px 8px 0;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -37,6 +68,7 @@
   transition: transform 0.3s ease;
   z-index: 100;
   transform: translateX(0);
+  font-size: 0.9rem;
 }
 
 .toc-wrapper.collapsed {
@@ -89,7 +121,7 @@
 /* Toggle button */
 .toc-toggle {
   position: fixed;
-  left: 30%;
+  left: 22%;
   top: 100px;
   background: #fff;
   border: none;
@@ -226,14 +258,18 @@ h4:hover .header-link {
 /* Responsive design */
 @media (max-width: 1200px) {
   .post {
-      width: 70%;
-      margin-left: 30%;
+      width: 75%;
+      margin-left: 23%;
+  }
+  .post.toc-hidden {
+      width: 75%;
+      transform: translateX(-23%);
   }
   .toc-wrapper {
-      width: 25%;
+      width: 20%;
   }
   .toc-toggle {
-      left: 25%;
+      left: 20%;
   }
 }
 
@@ -242,43 +278,14 @@ h4:hover .header-link {
       width: 100%;
       margin-left: 0;
   }
+  .post.toc-hidden {
+      width: 100%;
+      transform: translateX(0);
+  }
   .toc-wrapper {
       width: 80%;
   }
   .toc-toggle {
       left: 80%;
   }
-  .post.toc-hidden {
-      padding: 0 1em;
-  }
-}
-
-/* Reading progress bar */
-.reading-progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: #007bff;
-  z-index: 1000;
-  width: 0;
-  transition: width 0.1s ease;
-}
-
-/* Reading time estimate */
-.reading-time {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 20px;
-  padding: 4px 8px;
-  background: rgba(0, 123, 255, 0.1);
-  border-radius: 4px;
-}
-
-.reading-time i {
-  color: #007bff;
-  font-size: 0.8rem;
 }
