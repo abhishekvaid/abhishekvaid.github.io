@@ -252,3 +252,33 @@ h4:hover .header-link {
       padding: 0 1em;
   }
 }
+
+/* Reading progress bar */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: #007bff;
+  z-index: 1000;
+  width: 0;
+  transition: width 0.1s ease;
+}
+
+/* Reading time estimate */
+.reading-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 20px;
+  padding: 4px 8px;
+  background: rgba(0, 123, 255, 0.1);
+  border-radius: 4px;
+}
+
+.reading-time i {
+  color: #007bff;
+  font-size: 0.8rem;
+}

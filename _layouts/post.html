@@ -37,6 +37,18 @@ layout: default
       </p>
     </header>
 
+
+
+<!-- Reading progress bar -->
+<div class="reading-progress-bar" id="reading-progress"></div>
+
+<!-- Reading time estimate -->
+<div class="reading-time">
+  <i class="fas fa-clock"></i>
+  <span id="reading-time-estimate"></span> min read
+</div>
+
+
     <section class="post-content">
       {{ content }}
     </section>
@@ -210,4 +222,48 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', handleScroll);
   handleScroll();
 });
+
+
+
+
+
+
+
+// Calculate reading time
+function calculateReadingTime() {
+    const wordsPerMinute = 200; // Average reading speed
+    const content = document.querySelector('.post-content').textContent;
+    const words = content.trim().split(/\s+/).length;
+    const readingTime = Math.ceil(words / wordsPerMinute);
+    document.getElementById('reading-time-estimate').textContent = readingTime;
+}
+
+// Update reading progress bar
+function updateReadingProgress() {
+    const content = document.querySelector('.post-content');
+    const contentBox = content.getBoundingClientRect();
+    const progress = document.getElementById('reading-progress');
+    
+    // Calculate how much has been scrolled
+    const contentHeight = contentBox.height;
+    const scrollPosition = -contentBox.top;
+    const scrollPercentage = (scrollPosition / contentHeight) * 100;
+    
+    // Ensure percentage stays between 0 and 100
+    const percentage = Math.min(100, Math.max(0, scrollPercentage));
+    progress.style.width = `${percentage}%`;
+}
+
+// Add to your DOMContentLoaded listener
+document.addEventListener('DOMContentLoaded', function() {
+    // ... existing code ...
+    calculateReadingTime();
+    window.addEventListener('scroll', updateReadingProgress);
+    updateReadingProgress(); // Initial call
+});
+
+
+
+
+
 </script>
