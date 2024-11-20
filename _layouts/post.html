@@ -16,11 +16,11 @@ layout: default
 
 <!-- Toggle button for TOC -->
 <button id="toc-toggle" class="toc-toggle">
-  <i class="fas fa-chevron-left"></i>
+  <i class="fas fa-chevron-right"></i>
 </button>
 
 <!-- Table of Contents -->
-<div id="toc-wrapper" class="toc-wrapper">
+<div id="toc-wrapper" class="toc-wrapper collapsed">
   <h2>Table of Contents</h2>
   <ul id="toc-list"></ul>
 </div>
@@ -52,7 +52,7 @@ layout: default
 
     <footer class="post-footer">
       <p>Enjoyed this article? Share it:</p>
-      <div class="share-buttons">
+      <div class="share-buttons" style="display: flex;">
         <a href="https://twitter.com/intent/tweet?url={{ site.url }}{{ page.url }}&text={{ page.title }}" target="_blank" class="twitter-share" title="Share on Twitter">
           <i class="fab fa-twitter"></i>
         </a>
@@ -74,22 +74,22 @@ layout: default
 
 <!-- Vertical Toolbar -->
 <div id="vertical-toolbar" class="vertical-toolbar">
-  <button id="toolbar-button" class="toolbar-button" title="Settings">
+  <button id="toolbar-button" class="toolbar-button">
     <i class="fas fa-cog"></i>
   </button>
-  <button id="theme-toggle" class="toolbar-button" title="Toggle Dark/Light Theme">
+  <button id="theme-toggle" class="toolbar-button">
     <i class="fas fa-moon"></i>
   </button>
-  <button id="increase-font-size" class="toolbar-button" title="Increase Font Size">
+  <button id="increase-font-size" class="toolbar-button">
     <i class="fas fa-font" style="font-size: 24px;"></i>
   </button>
-  <button id="decrease-font-size" class="toolbar-button" title="Decrease Font Size">
+  <button id="decrease-font-size" class="toolbar-button">
     <i class="fas fa-font" style="font-size: 12px;"></i>
   </button>
-  <button id="reset-font-size" class="toolbar-button" title="Reset Font Size">
+  <button id="reset-font-size" class="toolbar-button">
     <i class="fas fa-undo"></i>
   </button>
-  <button id="share-button" class="toolbar-button" title="Share this article">
+  <button id="share-button" class="toolbar-button">
     <i class="fas fa-share-alt"></i>
   </button>
 </div>
@@ -269,6 +269,16 @@ document.addEventListener('DOMContentLoaded', function() {
     likeCount.textContent = likes[articleId];
     localStorage.setItem('likes', JSON.stringify(likes));
   });
+
+
+
+  // Share button functionality
+document.getElementById('share-button').addEventListener('click', function() {
+  // Scroll to the footer
+  document.querySelector('.post-footer').scrollIntoView({ behavior: 'smooth' });
+
+
+});
 });
 
 // Save theme to local storage
@@ -306,12 +316,6 @@ document.getElementById('decrease-font-size').addEventListener('click', function
 document.getElementById('reset-font-size').addEventListener('click', function() {
   currentFontSize = defaultFontSize; // Reset font size to default
   document.body.style.fontSize = `${currentFontSize}px`;
-});
-
-// Share button functionality
-document.getElementById('share-button').addEventListener('click', function() {
-  const shareButtons = document.querySelector('.share-buttons');
-  shareButtons.style.display = shareButtons.style.display === 'flex' ? 'none' : 'flex';
 });
 
 // Calculate reading time
